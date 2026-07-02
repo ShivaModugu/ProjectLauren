@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Little Page About You 🌸</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Nunito:wght@400;600;700;800&family=Press+Start+2P&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blush: #ffd8e4;
+            --rose: #ff9fbd;
+            --deep-rose: #e86f96;
+            --plum: #7a4a63;
+            --cream: #fff6f9;
+            --lilac: #e7d4f2;
+            --mint: #cfeede;
+            --ink: #5c3a4b;
+            --gold: #f4c56b;
+            --display: 'Fraunces', Georgia, serif;
+            --body: 'Nunito', system-ui, sans-serif;
+            --pixel: 'Press Start 2P', monospace;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--body);
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 15% 12%, #ffe6ee 0%, transparent 45%),
+                radial-gradient(circle at 85% 8%, #f0e0fb 0%, transparent 40%),
+                radial-gradient(circle at 50% 100%, #e5f6ec 0%, transparent 55%),
+                var(--cream);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* floating hearts + petals background */
+        #petal-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .wrap {
+            position: relative;
+            z-index: 2;
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 14px;
+        }
+
+        .hero .eyebrow {
+            font-family: var(--body);
+            font-weight: 800;
+            letter-spacing: .32em;
+            text-transform: uppercase;
+            font-size: clamp(.6rem, 1.6vw, .78rem);
+            color: var(--deep-rose);
+            opacity: .85;
+        }
+
+        .hero h1 {
+            font-family: var(--display);
+            font-weight: 500;
+            font-size: clamp(2.8rem, 9vw, 5.6rem);
+            line-height: 1.02;
+            color: var(--plum);
+            font-style: italic;
+        }
+
+        .hero h1 span {
+            display: block;
+            font-style: normal;
+            font-weight: 600;
+            background: linear-gradient(120deg, var(--deep-rose), var(--rose), var(--gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            max-width: 480px;
+            font-size: clamp(.95rem, 2.2vw, 1.1rem);
+            line-height: 1.7;
+            color: var(--ink);
+            opacity: .82;
+        }
+
+        .scroll-cue {
+            margin-top: 24px;
+            font-size: .8rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--deep-rose);
+            animation: bob 2s ease-in-out infinite;
+        }
+
+        @keyframes bob {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: .6;
+            }
+
+            50% {
+                transform: translateY(8px);
+                opacity: 1;
+            }
+        }
+
+        /* ── Section shell ── */
+        section.block {
+            margin-top: 64px;
+            background: rgba(255, 255, 255, .62);
+            backdrop-filter: blur(6px);
+            border: 1.5px solid rgba(255, 159, 189, .35);
+            border-radius: 28px;
+            padding: clamp(24px, 5vw, 44px);
+            box-shadow: 0 18px 50px -24px rgba(232, 111, 150, .5);
+        }
+
+        .sec-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .sec-head .dot {
+            font-size: 1.6rem;
+        }
+
+        .sec-head h2 {
+            font-family: var(--display);
+            font-weight: 600;
+            font-size: clamp(1.5rem, 4vw, 2.1rem);
+            color: var(--plum);
+        }
+
+        .sec-head .sub {
+            margin-left: auto;
+            font-size: .72rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--deep-rose);
+            opacity: .7;
+        }
+
+        /* ── Photos ── */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 16px;
+        }
+
+        .photo {
+            aspect-ratio: 3/4;
+            border-radius: 18px;
+            background: linear-gradient(150deg, var(--blush), var(--lilac));
+            border: 3px solid #fff;
+            box-shadow: 0 10px 26px -12px rgba(122, 74, 99, .6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--plum);
+            text-align: center;
+            padding: 12px;
+            transform: rotate(var(--tilt, 0deg));
+            transition: transform .25s ease, box-shadow .25s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo:nth-child(odd) {
+            --tilt: -2.5deg;
+        }
+
+        .photo:nth-child(even) {
+            --tilt: 2.5deg;
+        }
+
+        .photo:hover {
+            transform: rotate(0deg) scale(1.04);
+            box-shadow: 0 16px 34px -12px rgba(232, 111, 150, .7);
+        }
+
+        .photo .emoji {
+            font-size: 2rem;
+        }
+
+        .photo .cap {
+            font-size: .72rem;
+            font-weight: 700;
+            opacity: .7;
+        }
+
+        .photo img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-note {
+            margin-top: 16px;
+            font-size: .82rem;
+            color: var(--ink);
+            opacity: .6;
+            text-align: center;
+        }
+
+        /* ── Fun facts ── */
+        .facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 14px;
+        }
+
+        .fact {
+            background: var(--cream);
+            border: 1.5px solid rgba(231, 212, 242, .8);
+            border-radius: 18px;
+            padding: 18px 18px 16px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            transition: transform .2s ease, border-color .2s ease;
+        }
+
+        .fact:hover {
+            transform: translateY(-4px);
+            border-color: var(--rose);
+        }
+
+        .fact .ic {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .fact .lbl {
+            font-size: .66rem;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--deep-rose);
+            font-weight: 800;
+            margin-bottom: 3px;
+        }
+
+        .fact .val {
+            font-family: var(--display);
+            font-size: 1.05rem;
+            color: var(--plum);
+            line-height: 1.3;
+        }
+
+        /* ── Would You Rather ── */
+        #wyr-block {
+            background: linear-gradient(160deg, rgba(255, 246, 224, .85), rgba(255, 231, 240, .85));
+            text-align: center;
+        }
+
+        .wyr-progress {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .wyr-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: rgba(232, 111, 150, .25);
+            transition: background .3s ease, transform .3s ease;
+        }
+
+        .wyr-dot.done {
+            background: var(--deep-rose);
+        }
+
+        .wyr-dot.active {
+            background: var(--rose);
+            transform: scale(1.35);
+        }
+
+        .wyr-stage {
+            min-height: 210px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wyr-q {
+            width: 100%;
+            display: none;
+            animation: wyrIn .5s ease both;
+        }
+
+        .wyr-q.show {
+            display: block;
+        }
+
+        @keyframes wyrIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .wyr-prompt {
+            font-family: var(--display);
+            font-style: italic;
+            font-size: clamp(1.05rem, 3vw, 1.4rem);
+            color: var(--plum);
+            margin-bottom: 22px;
+        }
+
+        .wyr-options {
+            display: flex;
+            gap: clamp(12px, 3vw, 22px);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .wyr-opt {
+            flex: 1 1 150px;
+            max-width: 220px;
+            background: #fff;
+            border: 2px solid var(--rose);
+            border-radius: 20px;
+            padding: 22px 16px;
+            cursor: pointer;
+            font-family: var(--body);
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: var(--plum);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            transition: transform .18s ease, background .2s ease, box-shadow .2s ease, border-color .2s ease;
+            box-shadow: 0 8px 0 -2px rgba(232, 111, 150, .3);
+        }
+
+        .wyr-opt .wyr-emoji {
+            font-size: 2.4rem;
+        }
+
+        .wyr-opt:hover {
+            background: var(--blush);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 0 -2px rgba(232, 111, 150, .3);
+        }
+
+        .wyr-opt.picked {
+            background: linear-gradient(150deg, var(--rose), var(--deep-rose));
+            color: #fff;
+            border-color: #fff;
+            transform: scale(1.05);
+            box-shadow: 0 0 24px rgba(232, 111, 150, .5);
+        }
+
+        .wyr-vs {
+            align-self: center;
+            font-family: var(--display);
+            font-style: italic;
+            color: var(--deep-rose);
+            opacity: .6;
+            font-size: 1.1rem;
+        }
+
+        /* final reveal */
+        .wyr-final {
+            display: none;
+            animation: wyrIn .6s ease both;
+        }
+
+        .wyr-final.show {
+            display: block;
+        }
+
+        .wyr-final .heart {
+            font-size: 3rem;
+            animation: heartPop 1.4s ease-in-out infinite;
+        }
+
+        @keyframes heartPop {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.18);
+            }
+        }
+
+        .wyr-final .label {
+            font-family: var(--body);
+            font-weight: 800;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            font-size: .72rem;
+            color: var(--deep-rose);
+            margin: 14px 0 6px;
+        }
+
+        .wyr-final .answer {
+            font-family: var(--display);
+            font-size: clamp(1.4rem, 4.5vw, 2.2rem);
+            color: var(--plum);
+        }
+
+        .wyr-final .answer span {
+            background: linear-gradient(120deg, var(--deep-rose), var(--rose), var(--gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .wyr-replay {
+            margin-top: 22px;
+            padding: 10px 22px;
+            background: transparent;
+            border: 1.5px solid var(--rose);
+            border-radius: 30px;
+            color: var(--deep-rose);
+            font-family: var(--body);
+            font-weight: 700;
+            font-size: .82rem;
+            cursor: pointer;
+            transition: background .2s ease, color .2s ease;
+        }
+
+        .wyr-replay:hover {
+            background: var(--rose);
+            color: #fff;
+        }
+
+        /* ── Tamagotchi ── */
+        #tama-block {
+            background: linear-gradient(160deg, #fff2f7, #f3e9fc);
+        }
+
+        .tama-shell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .device {
+            background: linear-gradient(160deg, var(--rose), var(--deep-rose));
+            border-radius: 46% 46% 42% 42% / 20% 20% 20% 20%;
+            padding: 30px 34px 40px;
+            box-shadow: 0 22px 50px -20px rgba(232, 111, 150, .9), inset 0 4px 10px rgba(255, 255, 255, .4);
+            border: 3px solid #fff;
+            max-width: 320px;
+            width: 100%;
+        }
+
+        .screen {
+            background: #2b2233;
+            border-radius: 18px;
+            padding: 18px;
+            border: 4px solid #3d3047;
+            box-shadow: inset 0 3px 12px rgba(0, 0, 0, .5);
+        }
+
+        .screen-inner {
+            background: linear-gradient(180deg, #cfeede, #b9e4ff);
+            border-radius: 10px;
+            aspect-ratio: 1 / .92;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* clouds on screen */
+        .cloud {
+            position: absolute;
+            top: 14%;
+            font-size: 1rem;
+            opacity: .8;
+            animation: floatCloud 9s linear infinite;
+        }
+
+        .cloud.c2 {
+            top: 30%;
+            animation-duration: 13s;
+            animation-delay: -4s;
+            font-size: .8rem;
+        }
+
+        @keyframes floatCloud {
+            from {
+                transform: translateX(-40px);
+            }
+
+            to {
+                transform: translateX(220px);
+            }
+        }
+
+        #pixel-canvas {
+            image-rendering: pixelated;
+            width: 128px;
+            height: 128px;
+            margin-bottom: 30px;
+            transition: transform .15s ease;
+            z-index: 2;
+        }
+
+        .speech {
+            position: absolute;
+            top: 46%;
+            left: 50%;
+            transform: translate(-50%, -10px);
+            background: #fff;
+            color: #5c3a4b;
+            font-family: var(--pixel);
+            font-size: 7px;
+            line-height: 1.5;
+            padding: 6px 8px;
+            border-radius: 8px;
+            max-width: 150px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity .25s ease, transform .25s ease;
+            pointer-events: none;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, .2);
+            z-index: 3;
+        }
+
+        .speech.show {
+            opacity: 1;
+            transform: translate(-50%, -18px);
+        }
+
+        .speech::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #fff;
+            border-bottom: 0;
+        }
+
+        /* happiness meter */
+        .meter-wrap {
+            margin-top: 16px;
+        }
+
+        .meter-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--pixel);
+            font-size: 8px;
+            color: #fff;
+            margin-bottom: 8px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+        }
+
+        .meter {
+            height: 16px;
+            background: rgba(43, 34, 51, .55);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, .55);
+        }
+
+        .meter-fill {
+            height: 100%;
+            width: 60%;
+            background: linear-gradient(90deg, #ffe08a, #ff9fbd, #e86f96);
+            border-radius: 10px;
+            transition: width .5s cubic-bezier(.34, 1.4, .64, 1);
+        }
+
+        /* buttons */
+        .tama-btns {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            width: 100%;
+            max-width: 340px;
+        }
+
+        .tbtn {
+            font-family: var(--body);
+            font-weight: 800;
+            font-size: .92rem;
+            color: var(--plum);
+            background: #fff;
+            border: 2px solid var(--rose);
+            border-radius: 16px;
+            padding: 14px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform .12s ease, background .2s ease, box-shadow .2s ease;
+            box-shadow: 0 6px 0 -1px rgba(232, 111, 150, .35);
+        }
+
+        .tbtn:hover {
+            background: var(--blush);
+        }
+
+        .tbtn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 -1px rgba(232, 111, 150, .35);
+        }
+
+        .tbtn .be {
+            font-size: 1.2rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 70px;
+            font-family: var(--display);
+            font-style: italic;
+            font-size: 1.05rem;
+            color: var(--plum);
+            opacity: .8;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="petal-canvas"></canvas>
+
+    <div class="wrap">
+
+        <!-- HERO -->
+        <header class="hero">
+            <div class="eyebrow">a little corner of the internet</div>
+            <h1>All About <span>You</span></h1>
+            <p>A tiny scrapbook I made because you're kind of my favorite person to think about. Scroll around. There's a version of you living in a little machine down there. 🌸</p>
+            <div class="scroll-cue">↓ scroll ↓</div>
+        </header>
+
+        <!-- PHOTOS -->
+        <section class="block" id="photos-block">
+            <div class="sec-head">
+                <span class="dot">📸</span>
+                <h2>Favorite Photos</h2>
+                <span class="sub">swap these in</span>
+            </div>
+            <div class="photo-grid" id="photo-grid">
+                <!-- To add a real photo: replace the emoji/cap line with:
+                     <img src="her-photo.jpg" alt=""> -->
+                <div class="photo"><span class="emoji">🌷</span><span class="cap">add a photo</span></div>
+                <div class="photo"><span class="emoji">☀️</span><span class="cap">add a photo</span></div>
+                <div class="photo"><span class="emoji">🍧</span><span class="cap">add a photo</span></div>
+                <div class="photo"><span class="emoji">🎡</span><span class="cap">add a photo</span></div>
+                <div class="photo"><span class="emoji">🌙</span><span class="cap">add a photo</span></div>
+                <div class="photo"><span class="emoji">💌</span><span class="cap">add a photo</span></div>
+            </div>
+            <p class="photo-note">Drop your images in and replace the placeholders — instructions are in the code comment right above the photos.</p>
+        </section>
+
+        <!-- FUN FACTS -->
+        <section class="block" id="facts-block">
+            <div class="sec-head">
+                <span class="dot">⭐</span>
+                <h2>Fun Facts</h2>
+                <span class="sub">edit these</span>
+            </div>
+            <div class="facts">
+                <div class="fact"><span class="ic">☕</span><div><div class="lbl">Drink of choice</div><div class="val">Iced vanilla latte</div></div></div>
+                <div class="fact"><span class="ic">🎨</span><div><div class="lbl">Favorite color</div><div class="val">Soft dusty pink</div></div></div>
+                <div class="fact"><span class="ic">🎶</span><div><div class="lbl">On repeat</div><div class="val">Whatever's stuck in her head that week</div></div></div>
+                <div class="fact"><span class="ic">🍜</span><div><div class="lbl">Comfort food</div><div class="val">Spicy ramen, no debate</div></div></div>
+                <div class="fact"><span class="ic">🌻</span><div><div class="lbl">Hobby</div><div class="val">Thrifting + long walks</div></div></div>
+                <div class="fact"><span class="ic">😂</span><div><div class="lbl">Guaranteed laugh</div><div class="val">A truly terrible pun</div></div></div>
+            </div>
+        </section>
+
+        <!-- WOULD YOU RATHER -->
+        <section class="block" id="wyr-block">
+            <div class="sec-head" style="justify-content:center;">
+                <span class="dot">🌼</span>
+                <h2>Would You Rather?</h2>
+            </div>
+
+            <div class="wyr-progress" id="wyr-progress"></div>
+
+            <div class="wyr-stage">
+                <!-- questions injected by JS -->
+                <div id="wyr-questions" style="width:100%;"></div>
+
+                <div class="wyr-final" id="wyr-final">
+                    <div class="heart">💗</div>
+                    <div class="label">Correct answer</div>
+                    <div class="answer">Spending time <span>together</span> 😊</div>
+                    <button class="wyr-replay" onclick="wyrReset()">↺ play again</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAMAGOTCHI -->
+        <section class="block" id="tama-block">
+            <div class="sec-head">
+                <span class="dot">🕹️</span>
+                <h2>Pocket Her</h2>
+                <span class="sub">keep her happy</span>
+            </div>
+
+            <div class="tama-shell">
+                <div class="device">
+                    <div class="screen">
+                        <div class="screen-inner">
+                            <span class="cloud">☁️</span>
+                            <span class="cloud c2">☁️</span>
+                            <div class="speech" id="speech"></div>
+                            <canvas id="pixel-canvas" width="32" height="32"></canvas>
+
+                            <div class="meter-wrap" style="position:absolute; left:0; right:0; bottom:0; width:100%; padding:0 8px 10px;">
+                                <div class="meter-top">
+                                    <span>♡ HAPPINESS</span>
+                                    <span id="meter-pct">60%</span>
+                                </div>
+                                <div class="meter">
+                                    <div class="meter-fill" id="meter-fill"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tama-btns">
+                    <button class="tbtn" onclick="feed('coffee')"><span class="be">☕</span> Give coffee</button>
+                    <button class="tbtn" onclick="feed('snack')"><span class="be">🍪</span> Give snacks</button>
+                    <button class="tbtn" onclick="feed('joke')"><span class="be">😄</span> Tell a joke</button>
+                    <button class="tbtn" onclick="feed('compliment')"><span class="be">💗</span> Compliment</button>
+                </div>
+            </div>
+        </section>
+
+        <div class="footer">made with a little too much affection 🌸</div>
+    </div>
+
+    <script>
+        /* ─────────────── Background hearts + petals ─────────────── */
+        const pc = document.getElementById('petal-canvas'), px = pc.getContext('2d');
+        let bits = [];
+        const GLYPHS = ['🌸', '🌷', '💗', '✿', '❀'];
+        function resize() { pc.width = innerWidth; pc.height = innerHeight; }
+        resize(); addEventListener('resize', resize);
+        function mk(y) {
+            return {
+                x: Math.random() * pc.width, y: y ?? -20,
+                vy: Math.random() * .5 + .25, vx: (Math.random() - .5) * .5,
+                s: Math.random() * 12 + 12, rot: Math.random() * 6, rs: (Math.random() - .5) * .03,
+                a: Math.random() * .4 + .35, g: GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
+                w: Math.random() * 6.28, ws: Math.random() * .02 + .01
+            };
+        }
+        for (let i = 0; i < 22; i++) { const b = mk(Math.random() * pc.height); bits.push(b); }
+        let tick = 0;
+        function draw() {
+            px.clearRect(0, 0, pc.width, pc.height);
+            if (tick++ % 60 === 0 && bits.length < 34) bits.push(mk());
+            bits = bits.filter(b => b.y < pc.height + 30);
+            bits.forEach(b => {
+                b.w += b.ws; b.x += b.vx + Math.sin(b.w) * .4; b.y += b.vy; b.rot += b.rs;
+                px.save(); px.translate(b.x, b.y); px.rotate(b.rot); px.globalAlpha = b.a;
+                px.font = b.s + 'px serif'; px.textAlign = 'center'; px.fillText(b.g, 0, 0);
+                px.restore();
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+
+        /* ─────────────── Would You Rather ─────────────── */
+        const WYR = [
+            { prompt: "Would you rather escape to…", a: { t: "Beach", e: "🌊" }, b: { t: "Mountains", e: "🏔️" } },
+            { prompt: "Pick your drink…", a: { t: "Coffee", e: "☕" }, b: { t: "Boba", e: "🧋" } },
+            { prompt: "Which sky is better?", a: { t: "Sunrise", e: "🌅" }, b: { t: "Sunset", e: "🌇" } },
+            { prompt: "Most important question…", a: { t: "Cats", e: "🐈" }, b: { t: "Dogs", e: "🐕" } }
+        ];
+        const wyrQ = document.getElementById('wyr-questions');
+        const wyrProg = document.getElementById('wyr-progress');
+        const wyrFinal = document.getElementById('wyr-final');
+        let wyrStep = 0;
+
+        function wyrBuild() {
+            wyrQ.innerHTML = '';
+            wyrProg.innerHTML = '';
+            WYR.forEach((q, i) => {
+                const dot = document.createElement('div');
+                dot.className = 'wyr-dot';
+                dot.id = 'wyr-dot-' + i;
+                wyrProg.appendChild(dot);
+
+                const card = document.createElement('div');
+                card.className = 'wyr-q';
+                card.id = 'wyr-q-' + i;
+                card.innerHTML = `
+                    <div class="wyr-prompt">${q.prompt}</div>
+                    <div class="wyr-options">
+                        <div class="wyr-opt" onclick="wyrPick(${i},'a',this)">
+                            <span class="wyr-emoji">${q.a.e}</span>${q.a.t}
+                        </div>
+                        <div class="wyr-vs">or</div>
+                        <div class="wyr-opt" onclick="wyrPick(${i},'b',this)">
+                            <span class="wyr-emoji">${q.b.e}</span>${q.b.t}
+                        </div>
+                    </div>`;
+                wyrQ.appendChild(card);
+            });
+        }
+
+        function wyrShow(i) {
+            document.querySelectorAll('.wyr-q').forEach(q => q.classList.remove('show'));
+            wyrFinal.classList.remove('show');
+            document.querySelectorAll('.wyr-dot').forEach((d, di) => {
+                d.classList.toggle('done', di < i);
+                d.classList.toggle('active', di === i);
+            });
+            if (i < WYR.length) {
+                document.getElementById('wyr-q-' + i).classList.add('show');
+            } else {
+                document.querySelectorAll('.wyr-dot').forEach(d => { d.classList.add('done'); d.classList.remove('active'); });
+                wyrFinal.classList.add('show');
+            }
+        }
+
+        function wyrPick(i, choice, el) {
+            // highlight the picked option, lock this question briefly
+            const card = document.getElementById('wyr-q-' + i);
+            card.querySelectorAll('.wyr-opt').forEach(o => o.style.pointerEvents = 'none');
+            el.classList.add('picked');
+            wyrStep = i + 1;
+            setTimeout(() => {
+                wyrShow(wyrStep);
+                // gently keep the quiz centered as it advances
+                document.getElementById('wyr-block').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if (wyrStep >= WYR.length) wyrCelebrate();
+            }, 480);
+        }
+
+        function wyrCelebrate() {
+            const rect = document.getElementById('wyr-final').getBoundingClientRect();
+            const cx = rect.left + rect.width / 2, cy = rect.top + 40;
+            for (let k = 0; k < 14; k++) {
+                const h = document.createElement('div');
+                h.textContent = ['💗', '💕', '🌸', '✨', '😊'][Math.floor(Math.random() * 5)];
+                h.style.cssText = `position:fixed;left:${cx}px;top:${cy}px;font-size:${Math.random() * 12 + 14}px;
+                    z-index:99;pointer-events:none;transition:all 1.1s ease-out;`;
+                document.body.appendChild(h);
+                requestAnimationFrame(() => {
+                    h.style.transform = `translate(${(Math.random() - .5) * 260}px, ${-80 - Math.random() * 90}px) rotate(${(Math.random() - .5) * 80}deg)`;
+                    h.style.opacity = '0';
+                });
+                setTimeout(() => h.remove(), 1150);
+            }
+        }
+
+        function wyrReset() {
+            wyrStep = 0;
+            wyrBuild();
+            wyrShow(0);
+            document.getElementById('wyr-block').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        wyrBuild();
+        wyrShow(0);
+
+        /* ─────────────── Pixel character ─────────────── */
+        const cvs = document.getElementById('pixel-canvas'), ctx = cvs.getContext('2d');
+        // 32x32 sprite tuned to match her: long black hair, warm skin,
+        // hazel eyes, pink over-ear headphones, pink sweater.
+        // Legend in BASE:
+        //  . transparent  h hair  s skin  S jaw/chin shadow
+        //  C headphone band  U headphone cup
+        //  B brow marker  L eye-center marker  $ blush  P lip marker
+        //  d sweater  D sweater shadow  w collar
+        const PAL = {
+            hair: '#171016', hairHi: '#332332',
+            skin: '#f7d0ab', skinSh: '#e6b488',
+            white: '#fdf6ef', iris: '#7c5a34', irisHi: '#a9814d', pupil: '#241a12',
+            lash: '#241a20', brow: '#2b1f26',
+            band: '#ff9ec4', cup: '#ef6ba4', cupHi: '#ffc7de', cupSh: '#c94e83',
+            sweater: '#f3c1c9', sweatSh: '#e09aa7', collar: '#ffffff',
+            blush: '#ffa9c2', lip: '#d06d80', lipHi: '#e88b9c'
+        };
+
+        const BASE = [
+            "................................",
+            "..........hhhhhhhhhh............",
+            "........hhhhhhhhhhhhhh..........",
+            ".......hhhhhhhhhhhhhhhh.........",
+            "......hhhhhhhhhhhhhhhhhh........",
+            ".....hhhhhhhhhhhhhhhhhhhh.......",
+            "....hhhhhhhhhhhhhhhhhhhhhh......",
+            "....hCChhhhhssssshhhhhhCCh......",
+            "...CUUChhhhssssssshhhhhCUUC.....",
+            "...CUUChhhssssssssshhhhCUUC.....",
+            "...CUUChhssssssssssshhhCUUC.....",
+            "...CUUChhsssBsssssBsshhCUUC.....",
+            "...CUUChhsssssssssssshhCUUC.....",
+            "...CUUChhsLsssssssLsshhCUUC.....",
+            "....CChhssssssssssssshhCC.......",
+            ".....hhss$sssssss$ssshh.........",
+            ".....hhsssssssssssssshh.........",
+            ".....hhssssssPPPPsssshh.........",
+            "......hhssssssssssshh...........",
+            ".......hhsssssssshh.............",
+            "........hhSSSSSShh..............",
+            ".........hhwwwwhh...............",
+            "........hddddddddddh............",
+            ".......hdddddddddddddh..........",
+            "......hddddddddddddddddh........",
+            "......hdddDddddddddDdddh........",
+            "......hddddddddddddddddh........",
+            "......hddddddddddddddddh........",
+            ".......hdddddddddddddh..........",
+            "........hh........hh............",
+            ".......hss........ssh...........",
+            "................................"
+        ];
+
+        function sprite(lips, blush, eyes) {
+            // lips: 'smile' | 'big' | 'o'   eyes: 'open' | 'happy' | 'wink'
+            ctx.clearRect(0, 0, 32, 32);
+            const map = {
+                h: PAL.hair, s: PAL.skin, S: PAL.skinSh,
+                C: PAL.band, d: PAL.sweater, D: PAL.sweatSh, w: PAL.collar
+            };
+            for (let y = 0; y < BASE.length; y++) {
+                const row = BASE[y];
+                for (let x = 0; x < row.length; x++) {
+                    const ch = row[x];
+                    if (ch === '.' || ch === ' ') continue;
+                    if (ch === 'L' || ch === 'B' || ch === 'P') { ctx.fillStyle = PAL.skin; ctx.fillRect(x, y, 1, 1); continue; }
+                    if (ch === '$') { ctx.fillStyle = blush ? PAL.blush : PAL.skin; ctx.fillRect(x, y, 1, 1); continue; }
+                    if (ch === 'U') {
+                        ctx.fillStyle = PAL.cup; ctx.fillRect(x, y, 1, 1);
+                        if (x <= 5 && (y === 8 || y === 10)) { ctx.fillStyle = PAL.cupHi; ctx.fillRect(x, y, 1, 1); }
+                        if (x <= 5 && y === 12) { ctx.fillStyle = PAL.cupSh; ctx.fillRect(x, y, 1, 1); }
+                        continue;
+                    }
+                    ctx.fillStyle = map[ch] || PAL.skin;
+                    ctx.fillRect(x, y, 1, 1);
+                }
+            }
+            // hair highlight strands
+            ctx.fillStyle = PAL.hairHi;
+            [[12, 3], [12, 4], [13, 5], [19, 4], [19, 5], [20, 6]].forEach(([x, y]) => ctx.fillRect(x, y, 1, 1));
+            // brows
+            ctx.fillStyle = PAL.brow;
+            forEachMark('B', (x, y) => { ctx.fillRect(x, y, 2, 1); });
+            // eyes
+            forEachMark('L', (x, y) => drawEye(x, y, eyes));
+            drawLips(lips);
+        }
+
+        function forEachMark(mark, fn) {
+            for (let y = 0; y < BASE.length; y++)
+                for (let x = 0; x < BASE[y].length; x++)
+                    if (BASE[y][x] === mark) fn(x, y);
+        }
+
+        // L marks the left cell of a 2-wide eye.
+        function drawEye(ex, ey, mode) {
+            if (mode === 'happy') {                 // ^_^
+                ctx.fillStyle = PAL.lash;
+                ctx.fillRect(ex - 1, ey + 1, 1, 1);
+                ctx.fillRect(ex, ey, 2, 1);
+                ctx.fillRect(ex + 2, ey + 1, 1, 1);
+                return;
+            }
+            if (mode === 'wink' && ex < 14) {        // left eye closed
+                ctx.fillStyle = PAL.lash;
+                ctx.fillRect(ex - 1, ey, 3, 1);
+                return;
+            }
+            ctx.fillStyle = PAL.white; ctx.fillRect(ex, ey, 2, 2);
+            ctx.fillStyle = PAL.iris;  ctx.fillRect(ex, ey, 2, 2);
+            ctx.fillStyle = PAL.irisHi; ctx.fillRect(ex, ey, 1, 1);
+            ctx.fillStyle = PAL.pupil; ctx.fillRect(ex + 1, ey + 1, 1, 1);
+            ctx.fillStyle = PAL.lash;  ctx.fillRect(ex - 1, ey - 1, 4, 1); // upper lash
+        }
+
+        // Lips centered at x=13..16, row 17.
+        function drawLips(lips) {
+            if (lips === 'smile') {
+                ctx.fillStyle = PAL.lip;
+                ctx.fillRect(13, 17, 4, 1);
+                ctx.fillRect(12, 16, 1, 1); ctx.fillRect(16, 16, 1, 1);
+                ctx.fillStyle = PAL.lipHi; ctx.fillRect(13, 16, 2, 1);
+            } else if (lips === 'big') {
+                ctx.fillStyle = PAL.lip;
+                ctx.fillRect(12, 17, 6, 2);
+                ctx.fillStyle = PAL.white; ctx.fillRect(13, 17, 4, 1);
+            } else if (lips === 'o') {
+                ctx.fillStyle = PAL.lip;
+                ctx.fillRect(14, 17, 2, 2);
+                ctx.fillStyle = PAL.lipHi; ctx.fillRect(14, 17, 2, 1);
+            }
+        }
+
+        sprite('smile', false, 'open');
+
+        /* ─────────────── Tamagotchi logic ─────────────── */
+        let happy = 60;
+        const fill = document.getElementById('meter-fill');
+        const pct = document.getElementById('meter-pct');
+        const speech = document.getElementById('speech');
+        const canvasEl = document.getElementById('pixel-canvas');
+        let speechTimer, faceTimer;
+
+        const LINES = {
+            coffee: ["mmm caffeine ♡", "you remembered!", "one more sip…", "iced, obviously"],
+            snack: ["snacks!! ♡", "you're the best", "*happy crunch*", "yum yum yum"],
+            joke: ["hahaha stop", "you're so silly", "ok that was good", "*giggles*"],
+            compliment: ["awww you 🥺", "*blushes*", "you mean it??", "okay now I'm smiling"]
+        };
+        const MOODS = {
+            coffee: { m: 'smile', b: true, e: 'happy', bump: 8 },
+            snack: { m: 'big', b: true, e: 'happy', bump: 9 },
+            joke: { m: 'big', b: false, e: 'wink', bump: 7 },
+            compliment: { m: 'smile', b: true, e: 'happy', bump: 11 }
+        };
+
+        function setMeter() {
+            happy = Math.max(0, Math.min(100, happy));
+            fill.style.width = happy + '%';
+            pct.textContent = Math.round(happy) + '%';
+        }
+        setMeter();
+
+        function say(txt) {
+            speech.textContent = txt;
+            speech.classList.add('show');
+            clearTimeout(speechTimer);
+            speechTimer = setTimeout(() => speech.classList.remove('show'), 1900);
+        }
+
+        function bounce() {
+            canvasEl.style.transform = 'translateY(-8px) scale(1.08)';
+            setTimeout(() => canvasEl.style.transform = '', 180);
+        }
+
+        function feed(kind) {
+            const mood = MOODS[kind];
+            const lines = LINES[kind];
+            happy += mood.bump;
+            if (happy > 100) happy = 100;
+            setMeter();
+            sprite(mood.m, mood.b, mood.e);
+            bounce();
+            say(lines[Math.floor(Math.random() * lines.length)]);
+            spawnHearts();
+            clearTimeout(faceTimer);
+            faceTimer = setTimeout(() => sprite('smile', happy > 75, 'open'), 2000);
+        }
+
+        /* little hearts pop from the character */
+        function spawnHearts() {
+            const rect = canvasEl.getBoundingClientRect();
+            for (let i = 0; i < 6; i++) {
+                const h = document.createElement('div');
+                h.textContent = ['💗', '💕', '♡', '🌸'][Math.floor(Math.random() * 4)];
+                h.style.cssText = `position:fixed;left:${rect.left + rect.width / 2}px;top:${rect.top}px;
+                    font-size:${Math.random() * 10 + 12}px;z-index:99;pointer-events:none;transition:all 1s ease-out;`;
+                document.body.appendChild(h);
+                requestAnimationFrame(() => {
+                    h.style.transform = `translate(${(Math.random() - .5) * 120}px, ${-60 - Math.random() * 60}px) rotate(${(Math.random() - .5) * 60}deg)`;
+                    h.style.opacity = '0';
+                });
+                setTimeout(() => h.remove(), 1000);
+            }
+        }
+
+        /* slow happiness drift so it feels alive */
+        setInterval(() => {
+            if (happy > 40) { happy -= 1; setMeter(); if (happy <= 75) sprite('smile', false, 'open'); }
+        }, 9000);
+    </script>
+</body>
+
+</html>
